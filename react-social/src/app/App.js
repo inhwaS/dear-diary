@@ -19,6 +19,8 @@ import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 import './App.css';
 
+import NewDiary from '../diary/newdiary/NewDiary';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -79,8 +81,11 @@ class App extends Component {
               render={(props) => <Login authenticated={this.state.authenticated} {...props} />}></Route>
             <Route path="/signup"
               render={(props) => <Signup authenticated={this.state.authenticated} {...props} />}></Route>
-            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>  
+            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>
+            <PrivateRoute path="/newdiary" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+                                      component={NewDiary}></PrivateRoute>
             <Route component={NotFound}></Route>
+
           </Switch>
         </div>
         <Alert stack={{limit: 3}} 

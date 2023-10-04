@@ -49,3 +49,12 @@ export function signup(signupRequest) {
         body: JSON.stringify(signupRequest)
     });
 }
+
+
+export function newdiary(newDiaryRequest) {
+    return request({
+        url: API_BASE_URL + "/auth/newdiary",
+        method: 'POST',
+        body: JSON.stringify(newDiaryRequest)
+    });
+}

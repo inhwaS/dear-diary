@@ -7,13 +7,24 @@ class Home extends Component {
             <div className="home-container">
                 <div className="container">
                     <div className="graf-bg-container">
+                        <h1 className="home-title">Dear Diary for Us</h1>
+
                         <div className="graf-layout">
-                            <button>Make a New Diary</button>
-                            <button>Join Our Diary</button>
+
+                            <div className="social-login">
+                                <a className="btn btn-block social-btn google" href="/newdiary">
+                                    Make a New Diary</a>
+                            </div>
+
+                            <div className="social-login">
+                                <a className="btn btn-block social-btn google" href="/newdiary">
+                                    Join Our Diary</a>
+                            </div>
+
 
                         </div>
                     </div>
-                    <h1 className="home-title">Spring Boot React OAuth2 Social Login Demo</h1>
+
                 </div>
             </div>
         )

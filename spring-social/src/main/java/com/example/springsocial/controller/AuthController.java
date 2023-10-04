@@ -2,11 +2,10 @@ package com.example.springsocial.controller;
 
 import com.example.springsocial.exception.BadRequestException;
 import com.example.springsocial.model.AuthProvider;
+import com.example.springsocial.model.Diary;
 import com.example.springsocial.model.User;
-import com.example.springsocial.payload.ApiResponse;
-import com.example.springsocial.payload.AuthResponse;
-import com.example.springsocial.payload.LoginRequest;
-import com.example.springsocial.payload.SignUpRequest;
+import com.example.springsocial.payload.*;
+import com.example.springsocial.repository.DiaryRepository;
 import com.example.springsocial.repository.UserRepository;
 import com.example.springsocial.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,9 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private DiaryRepository diaryRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -70,6 +72,32 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         User result = userRepository.save(user);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath().path("/user/me")
+                .buildAndExpand(result.getId()).toUri();
+
+        return ResponseEntity.created(location)
+                .body(new ApiResponse(true, "User registered successfully@"));
+    }
+
+    @PostMapping("/newdiary")
+    public ResponseEntity<?> makeNewDiary(@Valid @RequestBody NewDiaryRequest newDiaryRequest) {
+        if(diaryRepository.existsByEmail(newDiaryRequest.getEmail())) {
+            throw new BadRequestException("Email address already in use.");
+        }
+
+        System.out.println(newDiaryRequest.getBegindt());
+        System.out.println(newDiaryRequest.getEmail());
+
+        Diary diary = new Diary();
+        diary.setEmail(newDiaryRequest.getEmail());
+        diary.setBegindt(newDiaryRequest.getBegindt());
+
+
+        System.out.println(diary.getId());
+        System.out.println(diary.getEmail());
+        Diary result = diaryRepository.save(diary);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/user/me")
