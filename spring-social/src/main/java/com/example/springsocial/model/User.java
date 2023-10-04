@@ -21,6 +21,10 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @Email
+    @Column(nullable = true)
+    private String partnerEmail;
+
     private String imageUrl;
 
     @Column(nullable = false)
