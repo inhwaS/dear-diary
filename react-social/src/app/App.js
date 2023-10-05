@@ -37,11 +37,6 @@ class App extends Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
-  // Define a function to update diaryInfo in the state
-  setDiaryInfo = (diaryInfo) => {
-      this.setState({ diaryInfo });
-  };
-
   loadCurrentlyLoggedInUser() {
     getCurrentUser()
     .then(response => {
@@ -82,7 +77,7 @@ class App extends Component {
         </div>
         <div className="app-body">
           <Switch>
-            <Route exact path="/" component={Home}></Route>           
+            <Route exact path="/" render={() => <Home currentUser={this.state.currentUser} />} />
             <PrivateRoute path="/profile" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
               component={Profile}></PrivateRoute>
             <Route path="/login"

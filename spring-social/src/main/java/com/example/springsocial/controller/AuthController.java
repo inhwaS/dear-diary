@@ -115,9 +115,8 @@ public class AuthController {
                 .body(result);
     }
 
-
     @GetMapping("/showDiary/{diaryId}") // Specify the diaryId as a path variable
-    public ResponseEntity<?> getDiaryInfo(@PathVariable String diaryId) {
+    public ResponseEntity<?> showDiary(@PathVariable String diaryId) {
         System.out.println(diaryId);
         // Retrieve the Diary by ID
         Diary diary = diaryRepository.findById(diaryId).orElseThrow();

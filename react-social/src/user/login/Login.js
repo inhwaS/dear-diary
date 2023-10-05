@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import './Login.css';
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../../constants';
 import { login } from '../../util/APIUtils';
+import { getCurrentUser } from '../../util/APIUtils';
 import { Link, Redirect } from 'react-router-dom'
 import fbLogo from '../../img/fb-logo.png';
 import googleLogo from '../../img/google-logo.png';
 import githubLogo from '../../img/github-logo.png';
 import Alert from 'react-s-alert';
+
 
 class Login extends Component {
     componentDidMount() {
@@ -39,6 +41,11 @@ class Login extends Component {
                 <div className="login-content">
                     <h1 className="login-title">Login to Dear Diary For Us</h1>
                     <SocialLogin />
+                    <div className="or-separator">
+                        <span className="or-text">OR</span>
+                    </div>
+                    <LoginForm {...this.props} />
+                    <span className="signup-link">New user? <Link to="/signup">Sign up!</Link></span>
                 </div>
             </div>
         );
@@ -86,9 +93,20 @@ class LoginForm extends Component {
         login(loginRequest)
         .then(response => {
             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-            Alert.success("You're successfully logged in!");
-            this.props.history.push("/");
-        }).catch(error => {
+            // After a successful login, load the current user
+            return getCurrentUser();
+        })
+        .then(userResponse => {
+            console.log(userResponse);
+            this.setState({
+                currentUser: userResponse,
+                authenticated: true,
+                loading: false
+            });
+            this.props.history.push("/",  { currentUser: userResponse });
+            window.location.reload();
+        })
+        .catch(error => {
             Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
         });
     }

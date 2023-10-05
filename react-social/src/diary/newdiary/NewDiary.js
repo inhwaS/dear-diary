@@ -15,7 +15,7 @@ class NewDiary extends Component {
                 <div className="container">
                     <h2>Welcome to Dear Diary! <br/>Please select your starting date of relationship.</h2>
                     <div className="newdiary-info">
-                        <NewDiaryForm {...this.props} />
+                        <NewDiaryForm currentUser={this.props.currentUser} {...this.props} />
                     </div>
                 </div>
             </div>
@@ -49,6 +49,7 @@ class NewDiaryForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
+        const { currentUser } = this.props; // Access currentUser prop
 
         const newDiaryRequest = Object.assign({}, this.state);
         console.log(newDiaryRequest);
@@ -60,9 +61,10 @@ class NewDiaryForm extends Component {
             // Extract the diaryId from the response (assuming it's named diaryId)
             const diaryId = response.id;
 
+            currentUser.diaryId = diaryId;
+
             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
             Alert.success("Diary created successfully!");
-
             // Use history.push to navigate to the showDiary page with the diaryId as a URL parameter
             this.props.history.push(`/showDiary/${diaryId}`);
         }).catch(error => {

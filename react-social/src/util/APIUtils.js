@@ -34,6 +34,19 @@ export function getCurrentUser() {
     });
 }
 
+export function getDiaryInfo(currentUser) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/auth/checkDiary",
+        method: 'GET',
+        body: JSON.stringify(userResponse)
+    });
+}
+
+
 export function login(loginRequest) {
     return request({
         url: API_BASE_URL + "/auth/login",
@@ -56,13 +69,5 @@ export function newdiary(newDiaryRequest) {
         url: API_BASE_URL + "/auth/newdiary",
         method: 'POST',
         body: JSON.stringify(newDiaryRequest)
-    });
-}
-
-// Add a new function to get diary information
-export function showdiary(diaryId) {
-    return request({
-        url: API_BASE_URL + "/auth/showDiary/" + diaryId, // Adjust the endpoint URL as needed
-        method: 'GET',
     });
 }
