@@ -18,8 +18,10 @@ import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 import './App.css';
-
+import ShowDiary from '../diary/showdiary/ShowDiary';
 import NewDiary from '../diary/newdiary/NewDiary';
+
+
 
 class App extends Component {
   constructor(props) {
@@ -27,12 +29,18 @@ class App extends Component {
     this.state = {
       authenticated: false,
       currentUser: null,
+      diaryInfo: null,
       loading: true
     }
 
     this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
+
+  // Define a function to update diaryInfo in the state
+  setDiaryInfo = (diaryInfo) => {
+      this.setState({ diaryInfo });
+  };
 
   loadCurrentlyLoggedInUser() {
     getCurrentUser()
@@ -83,7 +91,16 @@ class App extends Component {
               render={(props) => <Signup authenticated={this.state.authenticated} {...props} />}></Route>
             <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>
             <PrivateRoute path="/newdiary" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
-                                      component={NewDiary}></PrivateRoute>
+              component={NewDiary}></PrivateRoute>
+            <Route
+                path="/showDiary/:diaryId"
+                render={(props) => (
+                    <ShowDiary
+                        {...props}
+                        setDiaryInfo={this.setDiaryInfo} // Pass the function to update diaryInfo
+                    />
+                )}
+            />
             <Route component={NotFound}></Route>
 
           </Switch>

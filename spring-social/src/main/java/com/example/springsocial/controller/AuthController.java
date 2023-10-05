@@ -3,8 +3,10 @@ package com.example.springsocial.controller;
 import com.example.springsocial.exception.BadRequestException;
 import com.example.springsocial.model.AuthProvider;
 import com.example.springsocial.model.Diary;
+import com.example.springsocial.model.DiaryContent;
 import com.example.springsocial.model.User;
 import com.example.springsocial.payload.*;
+import com.example.springsocial.repository.DiaryContentRepository;
 import com.example.springsocial.repository.DiaryRepository;
 import com.example.springsocial.repository.UserRepository;
 import com.example.springsocial.security.TokenProvider;
@@ -20,6 +22,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/auth")
@@ -33,6 +37,9 @@ public class AuthController {
 
     @Autowired
     private DiaryRepository diaryRepository;
+
+    @Autowired
+    private DiaryContentRepository diaryContentRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -91,6 +98,7 @@ public class AuthController {
         System.out.println(newDiaryRequest.getEmail());
 
         Diary diary = new Diary();
+        diary.setId(generateRandomString(7));
         diary.setEmail(newDiaryRequest.getEmail());
         diary.setBegindt(newDiaryRequest.getBegindt());
 
@@ -104,7 +112,30 @@ public class AuthController {
                 .buildAndExpand(result.getId()).toUri();
 
         return ResponseEntity.created(location)
-                .body(new ApiResponse(true, "User registered successfully@"));
+                .body(result);
     }
 
+
+    @GetMapping("/showDiary/{diaryId}") // Specify the diaryId as a path variable
+    public ResponseEntity<?> getDiaryInfo(@PathVariable String diaryId) {
+        System.out.println(diaryId);
+        // Retrieve the Diary by ID
+        Diary diary = diaryRepository.findById(diaryId).orElseThrow();
+
+        return ResponseEntity.ok(diary);
+    }
+
+    // Helper method to generate a random string of specified length
+    private String generateRandomString(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder randomString = new StringBuilder();
+
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            randomString.append(characters.charAt(index));
+        }
+
+        return randomString.toString();
+    }
 }

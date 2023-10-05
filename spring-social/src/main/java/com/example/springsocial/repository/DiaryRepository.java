@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface DiaryRepository extends JpaRepository<Diary, Long> {
+public interface DiaryRepository extends JpaRepository<Diary, String> {
     Boolean existsByEmail(String email);
 
 }

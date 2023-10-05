@@ -5,13 +5,13 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Random;
 
 @Entity
 @Table(name = "diary")
 public class Diary {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(nullable = true)
     private String begindt;
@@ -20,7 +20,7 @@ public class Diary {
     @Column(nullable = false)
     private String email;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -35,4 +35,9 @@ public class Diary {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }

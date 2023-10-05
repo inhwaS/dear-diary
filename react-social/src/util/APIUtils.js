@@ -58,3 +58,11 @@ export function newdiary(newDiaryRequest) {
         body: JSON.stringify(newDiaryRequest)
     });
 }
+
+// Add a new function to get diary information
+export function showdiary(diaryId) {
+    return request({
+        url: API_BASE_URL + "/auth/showDiary/" + diaryId, // Adjust the endpoint URL as needed
+        method: 'GET',
+    });
+}
