@@ -5,11 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-})
-public class User {
+public class UserDiaryDAO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,6 +34,8 @@ public class User {
     private AuthProvider provider;
 
     private String providerId;
+
+    private String diaryId;
 
     public Long getId() {
         return id;
@@ -101,5 +99,21 @@ public class User {
 
     public void setProviderId(String providerId) {
         this.providerId = providerId;
+    }
+
+    public String getDiaryId() {
+        return diaryId;
+    }
+
+    public String getPartnerEmail() {
+        return partnerEmail;
+    }
+
+    public void setPartnerEmail(String partnerEmail) {
+        this.partnerEmail = partnerEmail;
+    }
+
+    public void setDiaryId(String diaryId) {
+        this.diaryId = diaryId;
     }
 }

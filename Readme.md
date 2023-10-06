@@ -14,3 +14,6 @@ entry (for optional feature).
 every day, allowing couples to track the progress of their journey together.
 - Anniversary Celebrations: Automatically sends an email such as the 100th day, 200th day, or 1st-year anniversary of
 their registration.
+
+## Milestone #1
+[milestone1.mov](react-social%2Fpublic%2Fmilestone1.mov)

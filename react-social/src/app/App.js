@@ -18,6 +18,11 @@ import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 import './App.css';
+import ShowDiary from '../diary/showdiary/ShowDiary';
+import NewDiary from '../diary/newdiary/NewDiary';
+import JoinDiary from '../diary/joindiary/JoinDiary';
+
+
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +30,7 @@ class App extends Component {
     this.state = {
       authenticated: false,
       currentUser: null,
+      diaryInfo: null,
       loading: true
     }
 
@@ -72,15 +78,29 @@ class App extends Component {
         </div>
         <div className="app-body">
           <Switch>
-            <Route exact path="/" component={Home}></Route>           
+            <Route exact path="/" render={() => <Home currentUser={this.state.currentUser} />} />
             <PrivateRoute path="/profile" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
               component={Profile}></PrivateRoute>
             <Route path="/login"
               render={(props) => <Login authenticated={this.state.authenticated} {...props} />}></Route>
             <Route path="/signup"
               render={(props) => <Signup authenticated={this.state.authenticated} {...props} />}></Route>
-            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>  
+            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>
+            <PrivateRoute path="/newdiary" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+              component={NewDiary}></PrivateRoute>
+            <PrivateRoute path="/joindiary" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+                          component={JoinDiary}></PrivateRoute>
+            <Route
+                path="/showDiary/:diaryId"
+                render={(props) => (
+                    <ShowDiary
+                        {...props}
+                        setDiaryInfo={this.setDiaryInfo} // Pass the function to update diaryInfo
+                    />
+                )}
+            />
             <Route component={NotFound}></Route>
+
           </Switch>
         </div>
         <Alert stack={{limit: 3}} 
@@ -90,5 +110,7 @@ class App extends Component {
     );
   }
 }
+
+
 
 export default App;

@@ -2,11 +2,11 @@ package com.example.springsocial.controller;
 
 import com.example.springsocial.exception.BadRequestException;
 import com.example.springsocial.model.AuthProvider;
+import com.example.springsocial.model.Diary;
 import com.example.springsocial.model.User;
-import com.example.springsocial.payload.ApiResponse;
-import com.example.springsocial.payload.AuthResponse;
-import com.example.springsocial.payload.LoginRequest;
-import com.example.springsocial.payload.SignUpRequest;
+import com.example.springsocial.payload.*;
+import com.example.springsocial.repository.DiaryContentRepository;
+import com.example.springsocial.repository.DiaryRepository;
 import com.example.springsocial.repository.UserRepository;
 import com.example.springsocial.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/auth")
@@ -31,6 +33,12 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private DiaryRepository diaryRepository;
+
+    @Autowired
+    private DiaryContentRepository diaryContentRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -79,4 +87,92 @@ public class AuthController {
                 .body(new ApiResponse(true, "User registered successfully@"));
     }
 
+    @PostMapping("/newdiary")
+    public ResponseEntity<?> makeNewDiary(@Valid @RequestBody NewDiaryRequest newDiaryRequest) {
+        if(diaryRepository.existsByEmail(newDiaryRequest.getEmail())) {
+            throw new BadRequestException("Email address already in use.");
+        }
+
+        System.out.println(newDiaryRequest.getBegindt());
+        System.out.println(newDiaryRequest.getEmail());
+
+        Diary diary = new Diary();
+        diary.setId(generateRandomString(7));
+        diary.setEmail(newDiaryRequest.getEmail());
+        diary.setBegindt(newDiaryRequest.getBegindt());
+
+
+        System.out.println(diary.getId());
+        System.out.println(diary.getEmail());
+        Diary result = diaryRepository.save(diary);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath().path("/user/me")
+                .buildAndExpand(result.getId()).toUri();
+
+        return ResponseEntity.created(location)
+                .body(result);
+    }
+
+
+    @PostMapping("/joindiary")
+    public ResponseEntity<?> joinDiary(@Valid @RequestBody NewDiaryRequest newDiaryRequest) {
+        Optional<Diary> optDiary = diaryRepository.findById(newDiaryRequest.getDiaryId());
+        if (optDiary.isPresent()){
+            Diary diary = optDiary.get();
+            diary.setPemail(newDiaryRequest.getEmail());
+            diaryRepository.save(diary);
+            return ResponseEntity.ok(optDiary);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping(value = "/diaryhome")
+    @ResponseBody()
+    public DiaryContentOutput diaryhome(@Valid @RequestBody NewDiaryRequest newDiaryRequest) {
+        Optional<Diary> optDiary = diaryRepository.findByEmail(newDiaryRequest.getEmail());
+        if (optDiary.isPresent()){
+            Diary diary = optDiary.get();
+
+            DiaryContentOutput diaryContentOutput = new DiaryContentOutput();
+            Optional<User> user1 = userRepository.findByEmail(diary.getEmail());
+            Optional<User> user2 = userRepository.findByEmail(diary.getPemail());
+            if (diary.getEmail().equals(newDiaryRequest.getEmail())){
+                diaryContentOutput.setName(user1.get().getName());
+                diaryContentOutput.setPname(user2.get().getName());
+            }else{
+                diaryContentOutput.setName(user2.get().getName());
+                diaryContentOutput.setPname(user1.get().getName());
+            }
+            diaryContentOutput.setDiaryId(diary.getId());
+            diaryContentOutput.setBegindt(diary.getBegindt());
+            return diaryContentOutput;
+        }else{
+            return null;
+        }
+    }
+
+    @GetMapping("/showDiary/{diaryId}") // Specify the diaryId as a path variable
+    public ResponseEntity<?> showDiary(@PathVariable String diaryId) {
+        System.out.println(diaryId);
+        // Retrieve the Diary by ID
+        Diary diary = diaryRepository.findById(diaryId).orElseThrow();
+
+        return ResponseEntity.ok(diary);
+    }
+
+    // Helper method to generate a random string of specified length
+    private String generateRandomString(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder randomString = new StringBuilder();
+
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            randomString.append(characters.charAt(index));
+        }
+
+        return randomString.toString();
+    }
 }
