@@ -14,9 +14,12 @@ public class NewDiaryRequest {
     @NotBlank
     @Email
     private String email;
-    @NotBlank
+
     @DateTimeFormat
     private String begindt;
+
+    @NotBlank
+    private String diaryId;
 
     public String getEmail() {
         return email;
@@ -29,4 +32,9 @@ public class NewDiaryRequest {
     public void setBegindt(String begindt) {
         this.begindt = begindt;
     }
+
+    public String getDiaryId() {
+        return diaryId;
+    }
 }
+

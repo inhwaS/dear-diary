@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface DiaryRepository extends JpaRepository<Diary, String> {
     Boolean existsByEmail(String email);
 
-    @Query("SELECT d FROM Diary d WHERE d.email = :email")
+    @Query("SELECT d FROM Diary d WHERE d.email = :email OR d.pemail = :email")
     Optional<Diary> findByEmail(@Param("email") String email);
 }

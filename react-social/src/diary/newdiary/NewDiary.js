@@ -11,9 +11,10 @@ class NewDiary extends Component {
     }
     render() {
         return (
-            <div className="newdiary-container">
-                <div className="container">
-                    <h2>Welcome to Dear Diary! <br/>Please select your starting date of relationship.</h2>
+            <div className="container">
+                <div class="page-not-found">
+                    <h2>Welcome to Dear Diary! </h2>
+                    <h3>Please select your starting date of relationship.</h3>
                     <div className="newdiary-info">
                         <NewDiaryForm currentUser={this.props.currentUser} {...this.props} />
                     </div>
@@ -74,6 +75,7 @@ class NewDiaryForm extends Component {
 
     render() {
         return (
+
             <form onSubmit={this.handleSubmit}>
                 <div className="form-item">
 

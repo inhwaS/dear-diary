@@ -115,6 +115,20 @@ public class AuthController {
                 .body(result);
     }
 
+
+    @PostMapping("/joindiary")
+    public ResponseEntity<?> joinDiary(@Valid @RequestBody NewDiaryRequest newDiaryRequest) {
+        Optional<Diary> optDiary = diaryRepository.findById(newDiaryRequest.getDiaryId());
+        if (optDiary.isPresent()){
+            Diary diary = optDiary.get();
+            diary.setPemail(newDiaryRequest.getEmail());
+            diaryRepository.save(diary);
+            return ResponseEntity.ok(optDiary);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/showDiary/{diaryId}") // Specify the diaryId as a path variable
     public ResponseEntity<?> showDiary(@PathVariable String diaryId) {
         System.out.println(diaryId);

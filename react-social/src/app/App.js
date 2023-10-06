@@ -20,6 +20,7 @@ import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 import './App.css';
 import ShowDiary from '../diary/showdiary/ShowDiary';
 import NewDiary from '../diary/newdiary/NewDiary';
+import JoinDiary from '../diary/joindiary/JoinDiary';
 
 
 
@@ -87,6 +88,8 @@ class App extends Component {
             <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>
             <PrivateRoute path="/newdiary" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
               component={NewDiary}></PrivateRoute>
+            <PrivateRoute path="/joindiary" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+                          component={JoinDiary}></PrivateRoute>
             <Route
                 path="/showDiary/:diaryId"
                 render={(props) => (

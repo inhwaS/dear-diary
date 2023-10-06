@@ -71,3 +71,11 @@ export function newdiary(newDiaryRequest) {
         body: JSON.stringify(newDiaryRequest)
     });
 }
+
+export function joindiary(newDiaryRequest) {
+    return request({
+        url: API_BASE_URL + "/auth/joindiary",
+        method: 'POST',
+        body: JSON.stringify(newDiaryRequest)
+    });
+}

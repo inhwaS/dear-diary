@@ -13,19 +13,25 @@ public class Diary {
     @Id
     private String id;
 
-    @Column(nullable = true)
+    @Column
     private String begindt;
 
     @Email
     @Column(nullable = false)
     private String email;
 
+    @Email
+    private String pemail;
     public String getId() {
         return id;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPemail() {
+        return pemail;
     }
 
     public void setBegindt(String begindt) {
@@ -40,4 +46,7 @@ public class Diary {
         this.id = id;
     }
 
+    public void setPemail(String pemail) {
+        this.pemail = pemail;
+    }
 }
