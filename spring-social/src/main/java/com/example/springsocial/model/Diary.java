@@ -49,4 +49,8 @@ public class Diary {
     public void setPemail(String pemail) {
         this.pemail = pemail;
     }
+
+    public String getBegindt() {
+        return begindt;
+    }
 }

@@ -3,7 +3,6 @@ package com.example.springsocial.controller;
 import com.example.springsocial.exception.BadRequestException;
 import com.example.springsocial.model.AuthProvider;
 import com.example.springsocial.model.Diary;
-import com.example.springsocial.model.DiaryContent;
 import com.example.springsocial.model.User;
 import com.example.springsocial.payload.*;
 import com.example.springsocial.repository.DiaryContentRepository;
@@ -126,6 +125,31 @@ public class AuthController {
             return ResponseEntity.ok(optDiary);
         }else{
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping(value = "/diaryhome")
+    @ResponseBody()
+    public DiaryContentOutput diaryhome(@Valid @RequestBody NewDiaryRequest newDiaryRequest) {
+        Optional<Diary> optDiary = diaryRepository.findByEmail(newDiaryRequest.getEmail());
+        if (optDiary.isPresent()){
+            Diary diary = optDiary.get();
+
+            DiaryContentOutput diaryContentOutput = new DiaryContentOutput();
+            Optional<User> user1 = userRepository.findByEmail(diary.getEmail());
+            Optional<User> user2 = userRepository.findByEmail(diary.getPemail());
+            if (diary.getEmail().equals(newDiaryRequest.getEmail())){
+                diaryContentOutput.setName(user1.get().getName());
+                diaryContentOutput.setPname(user2.get().getName());
+            }else{
+                diaryContentOutput.setName(user2.get().getName());
+                diaryContentOutput.setPname(user1.get().getName());
+            }
+            diaryContentOutput.setDiaryId(diary.getId());
+            diaryContentOutput.setBegindt(diary.getBegindt());
+            return diaryContentOutput;
+        }else{
+            return null;
         }
     }
 

@@ -10,6 +10,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 public class SpringSocialApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringSocialApplication.class, args);
+			SpringApplication.run(SpringSocialApplication.class, args);
 	}
 }
