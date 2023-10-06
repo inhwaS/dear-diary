@@ -18,7 +18,6 @@ public class NewDiaryRequest {
     @DateTimeFormat
     private String begindt;
 
-    @NotBlank
     private String diaryId;
 
     public String getEmail() {

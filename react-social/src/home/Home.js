@@ -30,10 +30,10 @@ class Home extends Component {
         } else {
             // If currentUser is not defined or does not have a name, it's not valid
             return (
-                <div class="home-container">
+                <div className="home-container">
                     <div className="container">
-                        <div class="graf-sm-container">
-                            <img class="logo" src={logo}/>
+                        <div className="graf-sm-container">
+                            <img className="logo" src={logo}/>
                         </div>
                         <div className="graf-bg-container">
                             <div className="graf-layout">
