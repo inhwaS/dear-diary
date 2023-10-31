@@ -94,7 +94,7 @@ class LoginForm extends Component {
         .then(response => {
             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
             // After a successful login, load the current user
-            return getCurrentUser();
+//            return getCurrentUser();
         })
         .then(userResponse => {
             console.log(userResponse);

@@ -76,7 +76,7 @@ class SignupForm extends Component {
         signup(signUpRequest)
         .then(response => {
             Alert.success("You're successfully registered. Please login to continue!");
-            this.props.history.push("/login");
+//            this.props.history.push("/login");
         }).catch(error => {
             Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');            
         });
