@@ -75,7 +75,6 @@ class NewDiaryForm extends Component {
 
     render() {
         return (
-
             <form onSubmit={this.handleSubmit}>
                 <div className="form-item">
 

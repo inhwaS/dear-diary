@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { writediary } from '../../util/APIUtils';
 import './WriteDiary.css';
 import Alert from 'react-s-alert';
 import { ACCESS_TOKEN } from '../../constants'; // Import ACCESS_TOKEN
@@ -27,12 +28,28 @@ class NewDiaryForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: this.props.currentUser.email,
-            begindt: ''
+            diaryId: this.props.currentUser.diaryId,
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    // Add a new state property to hold the selected image file
+    state = {
+        diaryId: this.props.currentUser.diaryId,
+        image: null, // Initialize as null
+    };
+
+    // Handle the image file change
+    handleImageChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            let img = event.target.files[0];
+            this.setState({
+                image: URL.createObjectURL(img),
+            });
+
+        }
+    };
 
     handleInputChange(event) {
         const target = event.target;
@@ -46,13 +63,11 @@ class NewDiaryForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        // Access currentUser and newDiaryRequest from the component's state
+        const { currentUser } = this.props; // Access currentUser from props
+        const { image } = this.state; // Access the selected image from the state
 
-        const { currentUser } = this.props; // Access currentUser prop
-
-        const newDiaryRequest = Object.assign({}, this.state);
-        console.log(newDiaryRequest);
-
-        writediary(newDiaryRequest)
+        writediary(currentUser.diaryId, image)
         .then(response => {
             console.log("Response from server:", response);
 
@@ -80,7 +95,9 @@ class NewDiaryForm extends Component {
                             value={this.state.begindt} onChange={this.handleInputChange} required/>
                     <h1></h1>
                     <textarea className="form-textarea" name="content" required></textarea>
-                    <DisplayImage required/>
+                    <img length="100%" width="100%" src={this.state.image} />
+                    <h1></h1>
+                    <input type="file" name="myImage" onChange={this.handleImageChange} />
                 </div>
                 <div className="form-item">
                     <button type="submit" className="btn btn-block btn-primary">Create</button>
@@ -88,42 +105,6 @@ class NewDiaryForm extends Component {
             </form>
         );
     }
-}
-
-class DisplayImage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      image: null
-    };
-
-   // if we are using arrow function binding is not required
-   //  this.onImageChange = this.onImageChange.bind(this);
-  }
-
-  onImageChange = event => {
-    if (event.target.files && event.target.files[0]) {
-      let img = event.target.files[0];
-      this.setState({
-        image: URL.createObjectURL(img)
-      });
-    }
-  };
-
-  render() {
-    return (
-      <div>
-        <div>
-          <div>
-          <h1></h1>
-            <img length="100%" width="100%" src={this.state.image} />
-            <h1></h1>
-            <input type="file" name="myImage" onChange={this.onImageChange} />
-          </div>
-        </div>
-      </div>
-    );
-  }
 }
 
 export default WriteDiary

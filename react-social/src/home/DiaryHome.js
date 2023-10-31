@@ -62,7 +62,7 @@ class DiaryHome extends Component {
                     </div>
                 </div>
                 ) : (
-                    <p>Loading data...</p>
+                    <p></p>
                 )}
             </Container>
         );

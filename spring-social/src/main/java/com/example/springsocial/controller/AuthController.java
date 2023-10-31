@@ -162,6 +162,7 @@ public class AuthController {
         return ResponseEntity.ok(diary);
     }
 
+
     // Helper method to generate a random string of specified length
     private String generateRandomString(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
