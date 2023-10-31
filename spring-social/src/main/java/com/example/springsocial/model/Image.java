@@ -11,10 +11,13 @@ public class Image {
     private String id;
 
     private String diaryId;
-    @Column(length = 512)
+
+    private String begindt;
+
+    private String content;
+
     private String name;
 
-    @Column(length = 128)
     private String type;
 
     @Lob
@@ -53,5 +56,13 @@ public class Image {
 
     public void setDiaryId(String diaryId) {
         this.diaryId = diaryId;
+    }
+
+    public void setBegindt(String begindt) {
+        this.begindt = begindt;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

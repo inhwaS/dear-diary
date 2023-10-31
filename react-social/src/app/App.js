@@ -22,7 +22,7 @@ import ShowDiary from '../diary/showdiary/ShowDiary';
 import NewDiary from '../diary/newdiary/NewDiary';
 import JoinDiary from '../diary/joindiary/JoinDiary';
 import WriteDiary from '../diary/writediary/WriteDiary';
-
+import OpenDiary from '../diary/opendiary/OpenDiary';
 
 
 class App extends Component {
@@ -91,19 +91,11 @@ class App extends Component {
               component={NewDiary}></PrivateRoute>
             <PrivateRoute path="/joindiary" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
                           component={JoinDiary}></PrivateRoute>
-            <Route
-                path="/showDiary/:diaryId"
-                render={(props) => (
-                    <ShowDiary
-                        {...props}
-                        setDiaryInfo={this.setDiaryInfo} // Pass the function to update diaryInfo
-                    />
-                )}
-            />
+            <PrivateRoute path="/showDiary/:diaryId" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+              component={WriteDiary}></PrivateRoute>
             <PrivateRoute path="/writediary" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
                                       component={WriteDiary}></PrivateRoute>
-            <Route component={NotFound}></Route>
-
+            <PrivateRoute component={NotFound}></PrivateRoute>
           </Switch>
         </div>
         <Alert stack={{limit: 3}} 

@@ -38,6 +38,8 @@ class NewDiaryForm extends Component {
     state = {
         diaryId: this.props.currentUser.diaryId,
         image: null, // Initialize as null
+        begindt: null,
+        content: '',
     };
 
     // Handle the image file change
@@ -65,9 +67,16 @@ class NewDiaryForm extends Component {
         event.preventDefault();
         // Access currentUser and newDiaryRequest from the component's state
         const { currentUser } = this.props; // Access currentUser from props
-        const { image } = this.state; // Access the selected image from the state
+        const { image, begindt, content } = this.state; // Access the selected image and other form field values from the state
 
-        writediary(currentUser.diaryId, image)
+        // Create a request object with all the data you want to send
+        const newDiaryRequest = {
+            diaryId: currentUser.diaryId,
+            begindt,
+            content,
+        };
+
+        writediary(newDiaryRequest, image)
         .then(response => {
             console.log("Response from server:", response);
 
@@ -76,10 +85,10 @@ class NewDiaryForm extends Component {
 
             currentUser.diaryId = diaryId;
 
-            localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+//            localStorage.setItem(ACCESS_TOKEN, response.accessToken);
             Alert.success("Diary created successfully!");
             // Use history.push to navigate to the showDiary page with the diaryId as a URL parameter
-            this.props.history.push(`/showDiary/${diaryId}`);
+            this.props.history.push("/");
         }).catch(error => {
             Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
         });
@@ -94,7 +103,7 @@ class NewDiaryForm extends Component {
                             className="form-control" placeholder="Today's date"
                             value={this.state.begindt} onChange={this.handleInputChange} required/>
                     <h1></h1>
-                    <textarea className="form-textarea" name="content" required></textarea>
+                    <textarea className="form-textarea" name="content" value={this.state.content} onChange={this.handleInputChange} required></textarea>
                     <img length="100%" width="100%" src={this.state.image} />
                     <h1></h1>
                     <input type="file" name="myImage" onChange={this.handleImageChange} />

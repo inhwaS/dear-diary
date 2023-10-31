@@ -1,7 +1,8 @@
 package com.example.springsocial.controller;
+import com.example.springsocial.model.DiaryData;
 import com.example.springsocial.model.Image;
-import com.example.springsocial.payload.NewDiaryRequest;
 import com.example.springsocial.repository.ImageRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +20,24 @@ public class DiaryController {
     ImageRepository imageRepository;
 
     @PostMapping("/writediary")
-    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file, @RequestParam("diaryData") String diaryId) throws IOException {
+    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file, @RequestParam("diaryData") String data) throws IOException {
         Image image = new Image();
         image.setId(generateRandomString(20));
         image.setName(file.getOriginalFilename());
         image.setType(file.getContentType());
         image.setPicByte(compressBytes(file.getBytes()));
-        image.setDiaryId(diaryId);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            // Parse the JSON string and convert it to a Java object
+            DiaryData diaryData = objectMapper.readValue(data, DiaryData.class);
+            image.setDiaryId(diaryData.getDiaryId());
+            image.setBegindt(diaryData.getBegindt());
+            image.setContent(diaryData.getContent());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         imageRepository.save(image); // Save the image and receive the saved entity
 
         return ResponseEntity.ok(image);
