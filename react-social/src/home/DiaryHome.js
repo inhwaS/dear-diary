@@ -41,18 +41,26 @@ class DiaryHome extends Component {
         return (
             <Container className="app-nav">
                 {diaryData ? (
-                <div class="page-not-found">
-
-                    <nav className="app-nav">
-                        <ul className="navbar-nav row justify-content-center" id="margin-please">
-                            <li className="nav-item col-md-4">{diaryData.name}</li>
-                            <li className="nav-item col-md-4">
-                                <img className="logosm" src={logosm} alt="Logo" />
-                            </li>
-                            <li className="nav-item col-md-4">{diaryData.pname}</li>
-                        </ul>
-                    </nav>
+                <div>
+                    <div className="page-not-found">
+                        <nav className="app-nav">
+                            <ul className="navbar-nav row justify-content-center" id="margin-please">
+                                <li className="nav-item col-md-4">{diaryData.name}</li>
+                                <li className="nav-item col-md-4">
+                                    <img className="logosm" src={logosm} alt="Logo" />
+                                </li>
+                                <li className="nav-item col-md-4">{diaryData.pname}</li>
+                            </ul>
+                        </nav>
                     </div>
+                    <div className="inner-block">
+                        <div className="col">
+                             <div className="social-login">
+                                <a className="btn btn-block social-btn google" href="/writediary">New Entry </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 ) : (
                     <p>Loading data...</p>
                 )}

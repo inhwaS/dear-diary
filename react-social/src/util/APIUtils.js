@@ -72,6 +72,14 @@ export function newdiary(newDiaryRequest) {
     });
 }
 
+export function writediary(newDiaryRequest) {
+    return request({
+        url: API_BASE_URL + "/auth/writediary",
+        method: 'POST',
+        body: JSON.stringify(newDiaryRequest)
+    });
+}
+
 export function joindiary(newDiaryRequest) {
     return request({
         url: API_BASE_URL + "/auth/joindiary",

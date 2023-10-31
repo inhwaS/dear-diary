@@ -21,6 +21,7 @@ import './App.css';
 import ShowDiary from '../diary/showdiary/ShowDiary';
 import NewDiary from '../diary/newdiary/NewDiary';
 import JoinDiary from '../diary/joindiary/JoinDiary';
+import WriteDiary from '../diary/writediary/WriteDiary';
 
 
 
@@ -99,6 +100,8 @@ class App extends Component {
                     />
                 )}
             />
+            <PrivateRoute path="/writediary" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+                                      component={WriteDiary}></PrivateRoute>
             <Route component={NotFound}></Route>
 
           </Switch>

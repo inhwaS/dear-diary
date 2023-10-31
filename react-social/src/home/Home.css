@@ -11,6 +11,13 @@
 #home-hav{
     position: relative;
 }
+.inner-block {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 40px;
+    text-align: center;
+}
 
 .home-title {
     font-size: 25px;
