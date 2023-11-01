@@ -89,6 +89,14 @@ export function diaryhome(newDiaryRequest) {
     });
 }
 
+export function opendiary(input) {
+    return request({
+        url: API_BASE_URL + "/opendiary",
+        method: 'POST',
+        body: JSON.stringify({diaryId: input})
+    });
+}
+
 export function writediary(newDiaryRequest, imageBlobURL) {
     return fetch(imageBlobURL)
         .then(response => response.blob())

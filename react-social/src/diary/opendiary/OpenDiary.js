@@ -1,23 +1,50 @@
 import React, { Component } from 'react';
+import { opendiary } from '../../util/APIUtils';
 import './OpenDiary.css';
 import Alert from 'react-s-alert';
-import { ACCESS_TOKEN } from '../../constants'; // Import ACCESS_TOKEN
+import { ACCESS_TOKEN } from '../../constants';
 
 class OpenDiary extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
+        this.state = {
+            diaryId: this.props.currentUser.diaryId,
+            images: [] // Initialize an empty array to store the fetched images.
+        };
+    }
+
+    componentDidMount() {
+        const { diaryId } = this.state;
+        opendiary(diaryId)
+        .then(data => {
+            this.setState({ images: data });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            Alert.error('Error fetching data. Please try again.');
+        });
     }
 
     render() {
         return (
-            <div className="profile-container">
-                <div className="container">
-                    <div className="page-not-found">
-                        <div class="desc">
-                            <h2>Open Diary! </h2>
-                            <div>
-                                <input type="text" className="field" value={this.props.location.pathname.split("/")[2]}/>
+            <div className="container">
+                <div className="diary-body">
+                    {this.state.images.map(image => (
+                        <ul key={image.id}>
+                            <p className="control"> {image.begindt} </p>
+                            <p className="control-content">{image.content} </p>
+                            <div className="image-container">
+                                <img
+                                    src={`data:${image.type};base64,${image.picByte}`}
+                                    alt={image.content}
+                                />
+                            </div>
+                        </ul>
+                    ))}
+                    <div className="inner-block">
+                        <div className="new-entry-button">
+                            <div className="social-login">
+                                <a className="btn btn-block social-btn google" href="/writediary">New Entry</a>
                             </div>
                         </div>
                     </div>
@@ -27,4 +54,4 @@ class OpenDiary extends Component {
     }
 }
 
-export default OpenDiary
+export default OpenDiary;

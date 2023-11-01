@@ -3,6 +3,8 @@ import './Home.css';
 import { getDiaryInfo } from '../util/APIUtils';
 import logo from '../img/logo.png';
 import DiaryHome from './DiaryHome';
+import PrivateRoute from '../common/PrivateRoute';
+import ShowDiary from '../diary/showdiary/ShowDiary';
 import {
   Route,
   Switch
@@ -18,16 +20,16 @@ class Home extends Component {
     render() {
         const { currentUser } = this.props;
 
-        if (currentUser && currentUser.diaryId) {
-            // If currentUser is defined and has a name, it's valid
+        if( currentUser && currentUser.diaryId){
             return (
                 <Route
                     render={(props) => (
                         <DiaryHome currentUser={currentUser}/>
                     )}
                 />
+//                <PrivateRoute currentUser={currentUser} component={DiaryHome}></PrivateRoute>
             );
-        } else {
+        }else {
             // If currentUser is not defined or does not have a name, it's not valid
             return (
                 <div className="home-container">

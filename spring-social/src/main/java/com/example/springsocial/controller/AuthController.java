@@ -133,9 +133,13 @@ public class AuthController {
     public DiaryContentOutput diaryhome(@Valid @RequestBody NewDiaryRequest newDiaryRequest) {
         Optional<Diary> optDiary = diaryRepository.findByEmail(newDiaryRequest.getEmail());
         if (optDiary.isPresent()){
+            DiaryContentOutput diaryContentOutput = new DiaryContentOutput();
             Diary diary = optDiary.get();
 
-            DiaryContentOutput diaryContentOutput = new DiaryContentOutput();
+            if (diary.getEmail() == null || diary.getPemail() == null){
+                return diaryContentOutput;
+            }
+
             Optional<User> user1 = userRepository.findByEmail(diary.getEmail());
             Optional<User> user2 = userRepository.findByEmail(diary.getPemail());
             if (diary.getEmail().equals(newDiaryRequest.getEmail())){

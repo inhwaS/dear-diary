@@ -29,6 +29,7 @@ class NewDiaryForm extends Component {
         super(props);
         this.state = {
             diaryId: this.props.currentUser.diaryId,
+            writer: this.props.currentUser.name,
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,16 +43,17 @@ class NewDiaryForm extends Component {
         content: '',
     };
 
-    // Handle the image file change
     handleImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0];
+            const imageUrl = URL.createObjectURL(img);
+            console.log("Image URL:", imageUrl);
             this.setState({
-                image: URL.createObjectURL(img),
+                image: imageUrl,
             });
-
         }
     };
+
 
     handleInputChange(event) {
         const target = event.target;
@@ -104,9 +106,11 @@ class NewDiaryForm extends Component {
                             value={this.state.begindt} onChange={this.handleInputChange} required/>
                     <h1></h1>
                     <textarea className="form-textarea" name="content" value={this.state.content} onChange={this.handleInputChange} required></textarea>
-                    <img length="100%" width="100%" src={this.state.image} />
+                    <img width="100%" height="100%" src={this.state.image} />
+
                     <h1></h1>
-                    <input type="file" name="myImage" onChange={this.handleImageChange} />
+                    <input type="file" name="myImage" accept="image/*" onChange={this.handleImageChange} />
+
                 </div>
                 <div className="form-item">
                     <button type="submit" className="btn btn-block btn-primary">Create</button>

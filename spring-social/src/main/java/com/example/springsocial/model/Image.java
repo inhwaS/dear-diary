@@ -65,4 +65,16 @@ public class Image {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public String getDiaryId() {
+        return diaryId;
+    }
+
+    public String getBegindt() {
+        return begindt;
+    }
+
+    public String getContent() {
+        return content;
+    }
 }

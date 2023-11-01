@@ -5,6 +5,8 @@ public class DiaryData {
     private String begindt;
     private String content;
 
+    private String writer;
+
     public String getDiaryId() {
         return diaryId;
     }
@@ -27,5 +29,13 @@ public class DiaryData {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
     }
 }

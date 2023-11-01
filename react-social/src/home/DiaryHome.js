@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Home.css';
 import { diaryhome } from '../util/APIUtils';
 import logosm from '../img/logo_sm.png';
+import diaryimage from '../img/diary.jpg';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -11,7 +12,7 @@ class DiaryHome extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            diaryData: null, // Initialize diaryData as null
+            diaryData: null
         };
     }
 
@@ -19,7 +20,6 @@ class DiaryHome extends Component {
         const { currentUser } = this.props; // Access currentUser prop
 
         const newDiaryRequest = Object.assign({}, currentUser);
-        console.log(newDiaryRequest);
 
         // This code will run when the component has been mounted to the DOM.
         // You can perform any page load actions or data fetching here.
@@ -29,7 +29,6 @@ class DiaryHome extends Component {
         diaryhome(newDiaryRequest)
         .then(response => {
             this.setState({ diaryData: response }); // Update the state with response data
-            console.log(this.state.diaryData);
         })
         .catch(error => {
             console.error('Error loading data:', error);
@@ -37,6 +36,8 @@ class DiaryHome extends Component {
     }
     render() {
         const { diaryData } = this.state; // Access diaryData from state
+//        const { pname } = this.state.pname;
+//        const title = diaryData.pname;
 
         return (
             <Container className="app-nav">
@@ -53,8 +54,13 @@ class DiaryHome extends Component {
                             </ul>
                         </nav>
                     </div>
+                    <div className="inner-block-image">
+                      <a href="/opendiary">
+                        <img className="diary-image" src={diaryimage} alt="Diary" />
+                      </a>
+                    </div>
                     <div className="inner-block">
-                        <div className="col">
+                        <div className="new-entry-button">
                              <div className="social-login">
                                 <a className="btn btn-block social-btn google" href="/writediary">New Entry </a>
                             </div>

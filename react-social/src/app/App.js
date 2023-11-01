@@ -92,9 +92,11 @@ class App extends Component {
             <PrivateRoute path="/joindiary" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
                           component={JoinDiary}></PrivateRoute>
             <PrivateRoute path="/showDiary/:diaryId" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
-              component={WriteDiary}></PrivateRoute>
+              component={ShowDiary}></PrivateRoute>
             <PrivateRoute path="/writediary" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
                                       component={WriteDiary}></PrivateRoute>
+            <PrivateRoute path="/opendiary" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+                                                component={OpenDiary}></PrivateRoute>
             <PrivateRoute component={NotFound}></PrivateRoute>
           </Switch>
         </div>

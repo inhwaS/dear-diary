@@ -19,11 +19,30 @@
     text-align: center;
 }
 
+.inner-block-image {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 40px;
+    text-align: center;
+}
+
+.diary-image {
+    margin: 0 auto;
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+    opacity: 50%;
+}
 .home-title {
     font-size: 25px;
     font-weight: 400;
     color: rgba(0,0,0,0.70);
     margin-top: 50px; 
+}
+
+.new-entry-button:hover{
+  background-color: #fff;
+  color: #e6eaed;
 }
 .logo{
     max-height:100%;

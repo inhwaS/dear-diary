@@ -9,10 +9,16 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
+import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
 @RestController
 public class DiaryController {
@@ -43,6 +49,24 @@ public class DiaryController {
         return ResponseEntity.ok(image);
     }
 
+    @PostMapping("/opendiary")
+    public ResponseEntity<?> opendiary(@RequestBody Map<String, String> request, HttpServletResponse response) throws IOException {
+        String diaryId = request.get("diaryId");
+        Optional<List<Image>> byDiaryId = imageRepository.findByDiaryId(diaryId);
+
+        if (byDiaryId.isPresent()){
+            List<Image> images = byDiaryId.get();
+            for (Image image : images) {
+                image.setPicByte(decompressBytes(image.getPicByte()));
+                response.setContentType(image.getType());
+            }
+            return ResponseEntity.ok(images);
+
+        }else{
+            return ResponseEntity.ok(null);
+        }
+    }
+
     public static byte[] compressBytes(byte[] data) {
         Deflater deflater = new Deflater();
         deflater.setInput(data);
@@ -59,6 +83,23 @@ public class DiaryController {
             } catch (IOException e) {
             }
         }
+        return outputStream.toByteArray();
+    }
+
+    public static byte[] decompressBytes(byte[] data) {
+        Inflater inflater = new Inflater();
+        inflater.setInput(data);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        byte[] buffer = new byte[1024];
+        try {
+            while (!inflater.finished()) {
+                int count = inflater.inflate(buffer);
+                outputStream.write(buffer, 0, count);
+            }
+            outputStream.close();
+        } catch (IOException | DataFormatException ignored) {
+        }
+
         return outputStream.toByteArray();
     }
 
