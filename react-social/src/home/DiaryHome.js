@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Home.css';
 import { diaryhome } from '../util/APIUtils';
 import logosm from '../img/logo_sm.png';
-import diaryimage from '../img/diary.jpg';
+import diaryimage from '../img/diary.png';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -59,13 +59,11 @@ class DiaryHome extends Component {
                         <img className="diary-image" src={diaryimage} alt="Diary" />
                       </a>
                     </div>
-                    <div className="inner-block">
-                        <div className="new-entry-button">
+                        <div className="inner-block-new">
                              <div className="social-login">
                                 <a className="btn btn-block social-btn google" href="/writediary">New Entry </a>
                             </div>
                         </div>
-                    </div>
                 </div>
                 ) : (
                     <p></p>

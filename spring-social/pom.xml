@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example</groupId>
-	<artifactId>spring-social</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>dear-diary</artifactId>
+	<version>1</version>
 	<packaging>jar</packaging>
 
 	<name>dear-diary</name>
