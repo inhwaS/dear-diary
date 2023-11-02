@@ -39,6 +39,10 @@ class OpenDiary extends Component {
                                     alt={image.content}
                                 />
                             </div>
+                              <span class="dot"></span>
+                              <span class="dot"></span>
+                              <span class="dot"></span>
+                              <span class="dot"></span>
                         </ul>
                     ))}
                     <div className="inner-block">
