@@ -1,16 +1,16 @@
 package com.example.springsocial.controller;
 
 import com.example.springsocial.exception.BadRequestException;
-import com.example.springsocial.model.AuthProvider;
-import com.example.springsocial.model.Diary;
-import com.example.springsocial.model.User;
+import com.example.springsocial.model.*;
 import com.example.springsocial.payload.*;
+import com.example.springsocial.repository.CelebrationRepository;
 import com.example.springsocial.repository.DiaryContentRepository;
 import com.example.springsocial.repository.DiaryRepository;
 import com.example.springsocial.repository.UserRepository;
 import com.example.springsocial.security.TokenProvider;
 import com.example.springsocial.security.email.GmailSender;
 import com.google.api.services.gmail.model.Message;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,10 +47,14 @@ public class AuthController {
     private DiaryRepository diaryRepository;
 
     @Autowired
+    private CelebrationRepository celebrationRepository;
+
+    @Autowired
     private DiaryContentRepository diaryContentRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
 
     @Autowired
     private TokenProvider tokenProvider;
@@ -170,12 +174,23 @@ public class AuthController {
 
             // send email every 100, 200 days
             if (calcuateDays(daysBetween)){
-                //send email!!
-                GmailSender gmailSender = new GmailSender(diary.getEmail(), daysBetween, diaryContentOutput.getName(), diaryContentOutput.getPname());
+                CelebrationId id = new CelebrationId(diary.getId(), daysBetween);
+                Optional<Celebration> celeb = celebrationRepository.findById(id);
+                if (!celeb.isPresent()){
+                    //send email!!
+                    GmailSender gmailSender = new GmailSender(diary.getEmail(), daysBetween, diaryContentOutput.getName(), diaryContentOutput.getPname());
 
-                // send email to the couple
-                gmailSender.sendMail("Congratulations for your " + daysBetween + " days!", diary.getEmail());
-                gmailSender.sendMail("Congratulations for your " + daysBetween + " days!", diary.getPemail());
+                    // send email to the couple
+                    gmailSender.sendMail("Congratulations for your " + daysBetween + " days!", diary.getEmail());
+                    gmailSender.sendMail("Congratulations for your " + daysBetween + " days!", diary.getPemail());
+
+                    Celebration celebration = new Celebration();
+                    celebration.setSent(1);
+                    celebration.setDays(daysBetween);
+                    celebration.setDiaryId(diary.getId());
+
+                    celebrationRepository.save(celebration);
+                }
             }
 
             return diaryContentOutput;
@@ -187,12 +202,12 @@ public class AuthController {
     private boolean calcuateDays(int days){
         int hundered = days / 10;
         int remainder = days % 100;
-
-        if (hundered > 1 && remainder != 0){
-            return true;
-        }else{
-            return false;
-        }
+        return  true;
+//        if (hundered > 1 && remainder != 0){
+//            return true;
+//        }else{
+//            return false;
+//        }
     }
 
     @GetMapping("/showDiary/{diaryId}") // Specify the diaryId as a path variable

@@ -20,6 +20,8 @@ public class Image {
 
     private String type;
 
+    private String writer;
+
     @Lob
     private byte[] picByte;
     public String getId() {
@@ -76,5 +78,13 @@ public class Image {
 
     public String getContent() {
         return content;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
     }
 }

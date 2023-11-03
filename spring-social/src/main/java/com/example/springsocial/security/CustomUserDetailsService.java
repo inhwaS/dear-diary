@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 /**
  * Created by rajeevkumarsingh on 02/08/17.
  */
@@ -35,10 +37,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Transactional
     public UserDetails loadUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("User", "id", id)
-        );
+        Optional<User> user = userRepository.findById(id);
 
-        return UserPrincipal.create(user);
+        return user.map(UserPrincipal::create).orElse(null);
+
     }
 }

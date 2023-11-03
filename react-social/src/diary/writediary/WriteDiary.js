@@ -38,6 +38,7 @@ class NewDiaryForm extends Component {
     // Add a new state property to hold the selected image file
     state = {
         diaryId: this.props.currentUser.diaryId,
+        writer: this.props.currentUser.name,
         image: null, // Initialize as null
         begindt: null,
         content: '',
@@ -74,6 +75,7 @@ class NewDiaryForm extends Component {
         // Create a request object with all the data you want to send
         const newDiaryRequest = {
             diaryId: currentUser.diaryId,
+            writer: currentUser.name,
             begindt,
             content,
         };

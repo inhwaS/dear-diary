@@ -32,7 +32,7 @@ class OpenDiary extends Component {
                     {this.state.images.map(image => (
                         <ul key={image.id}>
                             <p className="control"> {image.begindt} </p>
-                            <p className="control-content">{image.content} </p>
+                            <p className="control-content">{image.writer}: {image.content} </p>
                             <div className="image-container">
                                 <img
                                     src={`data:${image.type};base64,${image.picByte}`}

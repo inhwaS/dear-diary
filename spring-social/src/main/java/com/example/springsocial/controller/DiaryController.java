@@ -12,10 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -40,6 +37,7 @@ public class DiaryController {
             image.setDiaryId(diaryData.getDiaryId());
             image.setBegindt(diaryData.getBegindt());
             image.setContent(diaryData.getContent());
+            image.setWriter(diaryData.getWriter());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,6 +58,7 @@ public class DiaryController {
                 image.setPicByte(decompressBytes(image.getPicByte()));
                 response.setContentType(image.getType());
             }
+            images.sort((a, b) -> (b.getBegindt().compareTo(a.getBegindt())));
             return ResponseEntity.ok(images);
 
         }else{
