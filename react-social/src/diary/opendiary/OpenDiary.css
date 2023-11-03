@@ -5,6 +5,10 @@
     background-color: #ffffff;
     box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
 }
+
+.btn-entry:hover{
+    color: #000000;
+}
 .ul {
     border-radius: 3px;
     padding: 25px 30px;

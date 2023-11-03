@@ -55,10 +55,6 @@
     margin-top: 50px; 
 }
 
-.new-entry-button:hover{
-  background-color: #fff;
-  color: #e6eaed;
-}
 .logo{
     max-height:100%;
     max-width:100%;
@@ -245,6 +241,9 @@
     }
 }
 
+.new-entry:hover{
+    color: #000000;
+}
 .graf-circle:nth-child(7) {
     position: absolute;
     top: 50%;

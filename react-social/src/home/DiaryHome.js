@@ -62,9 +62,7 @@ class DiaryHome extends Component {
                             </a>
                         </div>
                         <div className="inner-block-new">
-                            <div className="social-login">
-                                <a className="btn btn-block social-btn google" href="/writediary">New Entry </a>
-                            </div>
+                                <a className="btn btn-block btn-primary new-entry" href="/writediary">New Entry </a>
                         </div>
                     </div>
                 ) : (

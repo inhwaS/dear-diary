@@ -39,17 +39,17 @@ class OpenDiary extends Component {
                                     alt={image.content}
                                 />
                             </div>
-                              <span class="dot"></span>
-                              <span class="dot"></span>
-                              <span class="dot"></span>
-                              <span class="dot"></span>
+                              <span className="dot"></span>
+                              <span className="dot"></span>
+                              <span className="dot"></span>
+                              <span className="dot"></span>
                         </ul>
                     ))}
-                    <div className="inner-block">
-                        <div className="new-entry-button">
-                            <div className="social-login">
-                                <a className="btn btn-block social-btn google" href="/writediary">New Entry</a>
-                            </div>
+                </div>
+                <div className="inner-block">
+                    <div className="new-entry-button">
+                        <div className="social-login">
+                            <a className="btn btn-block btn-primary btn-entry" href="/writediary">New Entry</a>
                         </div>
                     </div>
                 </div>
