@@ -38,6 +38,7 @@ class OAuth2RedirectHandler extends Component {
                 }
             }}/>; 
         }
+        return null;
     }
 }
 
