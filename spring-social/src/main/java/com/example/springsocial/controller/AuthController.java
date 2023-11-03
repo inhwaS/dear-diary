@@ -9,6 +9,8 @@ import com.example.springsocial.repository.DiaryContentRepository;
 import com.example.springsocial.repository.DiaryRepository;
 import com.example.springsocial.repository.UserRepository;
 import com.example.springsocial.security.TokenProvider;
+import com.example.springsocial.security.email.GmailSender;
+import com.google.api.services.gmail.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,12 +21,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Random;
 
@@ -136,7 +139,7 @@ public class AuthController {
 
     @PostMapping(value = "/diaryhome")
     @ResponseBody()
-    public DiaryContentOutput diaryhome(@Valid @RequestBody NewDiaryRequest newDiaryRequest) {
+    public DiaryContentOutput diaryhome(@Valid @RequestBody NewDiaryRequest newDiaryRequest) throws Exception {
         Optional<Diary> optDiary = diaryRepository.findByEmail(newDiaryRequest.getEmail());
         if (optDiary.isPresent()){
             DiaryContentOutput diaryContentOutput = new DiaryContentOutput();
@@ -165,8 +168,16 @@ public class AuthController {
             int daysBetween = (int) DAYS.between(bDt, date);
             diaryContentOutput.setDays(daysBetween);
 
+            // send email every 100, 200 days
             if (calcuateDays(daysBetween)){
                 //send email!!
+                GmailSender gmailSender = new GmailSender(diary.getEmail());
+                String message = "Happy " + daysBetween + "th day of love, laughter, and adventure together! \uD83C\uDF89\uD83D\uDC95 \n" +
+                        "It's been an incredible journey so far, and I can't wait to see where the next " + daysBetween + " days, and many more, will take us. \n" +
+                        "Thank you for filling my life with joy and warmth. \n" +
+                        "Here's to us and our beautiful journey! \uD83E\uDD42 #" + daysBetween +
+                        "DaysOfLove \n\n From. Dear Diary\n";
+                gmailSender.sendMail("Congratulations for your " + daysBetween + " days!", message);
             }
 
             return diaryContentOutput;
@@ -176,13 +187,15 @@ public class AuthController {
     }
 
     private boolean calcuateDays(int days){
-        int hundered = days / 100;
+        int hundered = days / 10;
         int remainder = days % 100;
-        if (hundered > 1 && remainder == 0){
-            return true;
-        }else{
-            return false;
-        }
+        // todo change numbers
+        return  true;
+//        if (hundered > 1 && remainder != 0){
+//            return true;
+//        }else{
+//            return false;
+//        }
     }
 
     @GetMapping("/showDiary/{diaryId}") // Specify the diaryId as a path variable
