@@ -2,6 +2,9 @@
 
 This web application is specifically designed for couples, providing them with a private platform to maintain a shared diary. Within this app, users can write personal diary entries with photos. To enhance the sentimental aspect of the app, it automatically calculates milestones, such as every 100th day, 200th day, or their annual anniversary, celebrating their strong and stable relationship. The app also automatically sends an email to celebrate their anniversary, including curated data from their diary to help couples remember their special memories.
 
+![Screenshot 2023-11-03 at 1 35 45 AM](https://github.com/inhwaS/dear-diary/assets/66104189/0b251003-1847-4aa4-8673-a0320301286a)
+
+
 ## Core Features:
 - OAuth Integration for User Verification: Implement OAuth to securely verify user identities and ensure a trusted environment for couples.
 - Monogamous Diary Limit: Allow each diary to have a maximum of two members, catering to monogamous couples who want to maintain a shared diary.
