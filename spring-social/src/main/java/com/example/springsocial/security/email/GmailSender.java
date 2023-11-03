@@ -44,7 +44,7 @@ public class GmailSender {
                 .setApplicationName("dear-diary")
                 .build();
         msg  = "Congratulations to " + name + " \uD83D\uDC97 " + pname + " on reaching your " + day + "th days! \uD83C\uDF89\uD83D\uDC95 \n" +
-                "Your journey has been a beautiful testament to the power of love and commitment. \n" +
+                "Your journey beautifully demonstrates love and commitment. \n" +
                 "Wishing you many more joyful days ahead as you continue to grow together. \n" +
                 "#" + day + "days #LoveCelebration\n\n From. Dear Diary\n";
     }
