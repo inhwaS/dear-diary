@@ -32,7 +32,6 @@ import static javax.mail.Message.RecipientType.TO;
 /* class to demonstrate use of Gmail list labels API */
 public class GmailSender {
 
-    private final String receiver;
     private final Gmail service;
 
     private final String msg;
@@ -44,8 +43,6 @@ public class GmailSender {
         service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory))
                 .setApplicationName("dear-diary")
                 .build();
-        receiver = user;
-
         msg  = "Congratulations to " + name + " \uD83D\uDC97 " + pname + " on reaching your " + day + "th days! \uD83C\uDF89\uD83D\uDC95 \n" +
                 "Your journey has been a beautiful testament to the power of love and commitment. \n" +
                 "Wishing you many more joyful days ahead as you continue to grow together. \n" +
@@ -78,7 +75,7 @@ public class GmailSender {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    public void sendMail(String subject) throws Exception {
+    public void sendMail(String subject, String receiver) throws Exception {
         // Encode as MIME message
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);

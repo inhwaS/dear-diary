@@ -173,7 +173,9 @@ public class AuthController {
                 //send email!!
                 GmailSender gmailSender = new GmailSender(diary.getEmail(), daysBetween, diaryContentOutput.getName(), diaryContentOutput.getPname());
 
-                gmailSender.sendMail("Congratulations for your " + daysBetween + " days!");
+                // send email to the couple
+                gmailSender.sendMail("Congratulations for your " + daysBetween + " days!", diary.getEmail());
+                gmailSender.sendMail("Congratulations for your " + daysBetween + " days!", diary.getPemail());
             }
 
             return diaryContentOutput;
@@ -185,13 +187,12 @@ public class AuthController {
     private boolean calcuateDays(int days){
         int hundered = days / 10;
         int remainder = days % 100;
-        // todo change numbers
-        return  true;
-//        if (hundered > 1 && remainder != 0){
-//            return true;
-//        }else{
-//            return false;
-//        }
+
+        if (hundered > 1 && remainder != 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @GetMapping("/showDiary/{diaryId}") // Specify the diaryId as a path variable
