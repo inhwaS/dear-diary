@@ -200,14 +200,13 @@ public class AuthController {
     }
 
     private boolean calcuateDays(int days){
-        int hundered = days / 10;
+        int hundered = days / 100;
         int remainder = days % 100;
-        return  true;
-//        if (hundered > 1 && remainder != 0){
-//            return true;
-//        }else{
-//            return false;
-//        }
+        if (hundered >= 1 && remainder == 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @GetMapping("/showDiary/{diaryId}") // Specify the diaryId as a path variable
