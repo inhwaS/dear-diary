@@ -165,9 +165,23 @@ public class AuthController {
             int daysBetween = (int) DAYS.between(bDt, date);
             diaryContentOutput.setDays(daysBetween);
 
+            if (calcuateDays(daysBetween)){
+                //send email!!
+            }
+
             return diaryContentOutput;
         }else{
             return null;
+        }
+    }
+
+    private boolean calcuateDays(int days){
+        int hundered = days / 100;
+        int remainder = days % 100;
+        if (hundered > 1 && remainder == 0){
+            return true;
+        }else{
+            return false;
         }
     }
 
