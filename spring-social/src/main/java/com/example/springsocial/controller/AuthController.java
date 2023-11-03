@@ -171,13 +171,9 @@ public class AuthController {
             // send email every 100, 200 days
             if (calcuateDays(daysBetween)){
                 //send email!!
-                GmailSender gmailSender = new GmailSender(diary.getEmail());
-                String message = "Happy " + daysBetween + "th day of love, laughter, and adventure together! \uD83C\uDF89\uD83D\uDC95 \n" +
-                        "It's been an incredible journey so far, and I can't wait to see where the next " + daysBetween + " days, and many more, will take us. \n" +
-                        "Thank you for filling my life with joy and warmth. \n" +
-                        "Here's to us and our beautiful journey! \uD83E\uDD42 #" + daysBetween +
-                        "DaysOfLove \n\n From. Dear Diary\n";
-                gmailSender.sendMail("Congratulations for your " + daysBetween + " days!", message);
+                GmailSender gmailSender = new GmailSender(diary.getEmail(), daysBetween, diaryContentOutput.getName(), diaryContentOutput.getPname());
+
+                gmailSender.sendMail("Congratulations for your " + daysBetween + " days!");
             }
 
             return diaryContentOutput;

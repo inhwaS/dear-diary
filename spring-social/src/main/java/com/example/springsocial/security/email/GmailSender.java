@@ -35,7 +35,9 @@ public class GmailSender {
     private final String receiver;
     private final Gmail service;
 
-    public GmailSender(String user) throws Exception{
+    private final String msg;
+
+    public GmailSender(String user, int day, String name, String pname) throws Exception{
         // Build a new authorized API client service.
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
@@ -43,6 +45,11 @@ public class GmailSender {
                 .setApplicationName("dear-diary")
                 .build();
         receiver = user;
+
+        msg  = "Congratulations to " + name + " \uD83D\uDC97 " + pname + " on reaching your " + day + "th days! \uD83C\uDF89\uD83D\uDC95 \n" +
+                "Your journey has been a beautiful testament to the power of love and commitment. \n" +
+                "Wishing you many more joyful days ahead as you continue to grow together. \n" +
+                "#" + day + "days #LoveCelebration\n\n From. Dear Diary\n";
     }
 
 
@@ -71,7 +78,7 @@ public class GmailSender {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    public void sendMail(String subject, String msg1) throws Exception {
+    public void sendMail(String subject) throws Exception {
         // Encode as MIME message
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
@@ -79,7 +86,7 @@ public class GmailSender {
         email.setFrom(new InternetAddress(receiver));
         email.addRecipient(TO, new InternetAddress(receiver));
         email.setSubject(subject);
-        email.setText(msg1);
+        email.setText(msg);
 
         // Encode and wrap the MIME message into a gmail message
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
