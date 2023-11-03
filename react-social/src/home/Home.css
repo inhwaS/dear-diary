@@ -18,10 +18,20 @@
     padding: 40px;
     text-align: center;
 }
+
+.inner-block-dates {
+    max-width: 300px;
+    max-height: 50px;
+    margin: 0 auto;
+    margin-top: 30px;
+    text-align: center;
+    font-family: monospace !important;
+}
+
 .inner-block-new {
     max-width: 500px;
     margin: 0 auto;
-    padding: 40px;
+    padding: 10px;
     text-align: center;
 }
 .inner-block-image {
@@ -33,7 +43,7 @@
 
 .diary-image {
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 10px;
     text-align: center;
     width: 100%;
     opacity: 80%;

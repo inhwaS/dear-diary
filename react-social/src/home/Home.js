@@ -27,7 +27,6 @@ class Home extends Component {
                         <DiaryHome currentUser={currentUser}/>
                     )}
                 />
-//                <PrivateRoute currentUser={currentUser} component={DiaryHome}></PrivateRoute>
             );
         }else {
             // If currentUser is not defined or does not have a name, it's not valid

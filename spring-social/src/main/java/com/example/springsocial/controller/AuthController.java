@@ -21,8 +21,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Random;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @RestController
 @RequestMapping("/auth")
@@ -151,6 +157,14 @@ public class AuthController {
             }
             diaryContentOutput.setDiaryId(diary.getId());
             diaryContentOutput.setBegindt(diary.getBegindt());
+
+            // calcualte diary begin date
+            LocalDate date = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate bDt = LocalDate.parse(diary.getBegindt(), formatter);
+            int daysBetween = (int) DAYS.between(bDt, date);
+            diaryContentOutput.setDays(daysBetween);
+
             return diaryContentOutput;
         }else{
             return null;

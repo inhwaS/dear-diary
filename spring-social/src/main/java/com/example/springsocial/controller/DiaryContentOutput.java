@@ -12,6 +12,16 @@ public class DiaryContentOutput {
     
     private String begindt;
 
+    private int days;
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
+    }
+
     public void setDiaryId(String diaryId) {
         this.diaryId = diaryId;
     }

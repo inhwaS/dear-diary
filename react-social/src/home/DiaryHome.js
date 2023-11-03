@@ -54,6 +54,9 @@ class DiaryHome extends Component {
                             </ul>
                         </nav>
                     </div>
+                    <div className="inner-block-dates">
+                        <p className="nav-item col-md-4">{diaryData.begindt} • {diaryData.days} days</p>
+                    </div>
                     <div className="inner-block-image">
                       <a href="/opendiary">
                         <img className="diary-image" src={diaryimage} alt="Diary" />
