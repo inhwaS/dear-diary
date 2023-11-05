@@ -1,11 +1,13 @@
 spring:
   datasource:
+    # local environment
     url: jdbc:mysql://localhost:3306/spring_social?useSSL=false&serverTimezone=UTC
     username: root
     password: dlskdlsk12!!
-    #    url: jdbc:mysql://db:3306/spring_social?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
-    #    username: springsocial
-    #    password: dlskdlsk12!!
+#    # docker environment
+#    url: jdbc:mysql://db:3306/spring_social?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+#    username: springsocial
+#    password: dlskdlsk12!!
 
   jpa:
     show-sql: true
