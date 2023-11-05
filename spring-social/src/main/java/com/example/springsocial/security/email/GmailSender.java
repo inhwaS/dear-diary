@@ -60,7 +60,7 @@ public class GmailSender {
     private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory)
             throws Exception {
         // Load client secrets.
-        InputStream in = GmailSender.class.getResourceAsStream("/client_secret_524857426442-sj8qp6k2scnultrjmb7clno6t3tiner3.apps.googleusercontent.com.json");
+        InputStream in = GmailSender.class.getResourceAsStream("/client_secret_595528168185-e6ea4r7kge4kvo047gsnp1juvqgdgnf0.apps.googleusercontent.com.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(jsonFactory, new InputStreamReader(in));
 

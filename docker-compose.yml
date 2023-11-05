@@ -1,0 +1,48 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+
+version: '3.7'
+
+# Define services
+services:
+  # App backend service
+  app-server:
+    # Configuration for building the docker image for the backend service
+    build:
+      context: spring-social # Use an image built from the specified dockerfile in the `polling-app-server` directory.
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    restart: always
+    depends_on:
+      - db # This service depends on mysql. Start that first.
+
+  # Frontend Service
+  app-client:
+    build:
+      context: react-social # Use an image built from the specified dockerfile in the `polling-app-client` directory.
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Forward the exposed port 80 on the container to port 80 on the host machine
+    restart: always
+    depends_on:
+      - app-server
+
+  # Database Service (Mysql)
+  db:
+    image: arm64v8/mysql:8.0.35
+    ports:
+      - "3308:3306"
+    restart: always
+    environment:
+      MYSQL_DATABASE: spring_social
+      MYSQL_USER: springsocial
+      MYSQL_PASSWORD: dlskdlsk12!!
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ALLOW_PUBLIC_KEY_RETRIEVAL: "true"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./init-scripts:/docker-entrypoint-initdb.d  # Mount the init-scripts directory
+
+# Volumes
+volumes:
+  db-data:

@@ -1,13 +1,16 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/spring_social?useSSL=false
+    url: jdbc:mysql://localhost:3306/spring_social?useSSL=false&serverTimezone=UTC
     username: root
     password: dlskdlsk12!!
+    #    url: jdbc:mysql://db:3306/spring_social?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    #    username: springsocial
+    #    password: dlskdlsk12!!
 
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties:
       hibernate:
@@ -17,8 +20,8 @@ spring:
       client:
         registration:
           google:
-            clientId: 524857426442-td8sv937fvt0lj63v76ajj0g996tvr19.apps.googleusercontent.com
-            clientSecret: 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
+            clientId: 595528168185-e6ea4r7kge4kvo047gsnp1juvqgdgnf0.apps.googleusercontent.com
+            clientSecret: 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
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
