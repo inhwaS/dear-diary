@@ -13,6 +13,5 @@ This web application is specifically designed for couples, providing them with a
 every day, allowing couples to track the progress of their journey together.
 - Anniversary Celebrations: Automatically sends an email such as the 100th day, 200th day, or 1st-year anniversary of their registration.
 
-## Milestone #1
-https://github.com/inhwaS/dear-diary/assets/66104189/09ad5f72-4aa1-4d52-bb46-3358e1daeb43
-
+## Demo Video
+https://drive.google.com/file/d/1m8pwd-03aMwwqiWQqo5hiteF3_wPV4PH/view
