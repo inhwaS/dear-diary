@@ -1,13 +1,13 @@
 spring:
   datasource:
     # local environment
-    url: jdbc:mysql://localhost:3306/spring_social?useSSL=false&serverTimezone=UTC
-    username: root
-    password: dlskdlsk12!!
+#    url: jdbc:mysql://localhost:3306/spring_social?useSSL=false&serverTimezone=UTC
+#    username: root
+#    password: #mypassword for local mysql
 #    # docker environment
-#    url: jdbc:mysql://db:3306/spring_social?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
-#    username: springsocial
-#    password: dlskdlsk12!!
+    url: jdbc:mysql://db:3306/spring_social?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    username: springsocial
+    password: # password for docker password
 
   jpa:
     show-sql: true
@@ -22,15 +22,15 @@ spring:
       client:
         registration:
           google:
-            clientId: 595528168185-e6ea4r7kge4kvo047gsnp1juvqgdgnf0.apps.googleusercontent.com
-            clientSecret: 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
+            clientId: ## google api client
+            clientSecret: ## google api key
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
               - profile
 app:
   auth:
-    tokenSecret: 04ca023b39512e46d0c2cf4b48d5aac61d34302994c87ed4eff225dcf3b0a218739f3897051a057f9b846a69ea2927a587044164b7bae5e1306219d50b588cb1
+    tokenSecret: ## secret token
     tokenExpirationMsec: 864000000
   cors:
     allowedOrigins: http://localhost:3000,http://localhost:8080
