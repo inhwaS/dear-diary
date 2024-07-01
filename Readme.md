@@ -14,4 +14,5 @@ every day, allowing couples to track the progress of their journey together.
 - Anniversary Celebrations: Automatically sends an email such as the 100th day, 200th day, or 1st-year anniversary of their registration.
 
 ## Demo Video
-![Click here to watch](https://youtu.be/Cf_nA_WEFGg?si=Jkl2udDKj6EB0pTb)
+[![](https://markdown-videos-api.jorgenkh.no/youtube/Cf_nA_WEFGg)](https://youtu.be/Cf_nA_WEFGg?si=QxnBa7POqJHHPze_)
+
